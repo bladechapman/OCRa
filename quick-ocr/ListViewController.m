@@ -10,7 +10,9 @@
 #import "ListItemStore.h"
 #import "ListItem.h"
 
-@interface ListViewController ()
+@interface ListViewController () {
+    NSInteger selectedPath;
+}
 
 @end
 
@@ -37,7 +39,9 @@
         label.text = NSLocalizedString(@"Ocra", @"");
         [label sizeToFit];
 
-        self.tableView.tableHeaderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ITc3qFX"]];
+        selectedPath = -1;
+
+//        self.tableView.tableHeaderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ITc3qFX"]];
 
         [[self navigationItem] setLeftBarButtonItem:[[UIBarButtonItem alloc]
                                                      initWithImage:[UIImage imageNamed:@"camera-icon"] landscapeImagePhone:[UIImage imageNamed:@"camera-icon"] style:UIBarButtonItemStylePlain target:self action:@selector(returnToCam:)]];
@@ -130,10 +134,40 @@
     }   
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //If this is the selected index we need to return the height of the cell
+    //in relation to the label height otherwise we just return the minimum label height with padding
+    if(selectedPath == indexPath.row)
+    {
+        return 100.f;
+    }
+    else {
+        return 50.f;
+    }
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSLog(@"%@", [(ListItem *)[[[ListItemStore sharedStore] allItems] objectAtIndex:[indexPath row]] text]);
+//    NSLog(@"%@", [(ListItem *)[[[ListItemStore sharedStore] allItems] objectAtIndex:[indexPath row]] text]);
+
+    if (selectedPath == indexPath.row) {
+        selectedPath = -1;
+        [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        return;
+    }
+
+    if (selectedPath >= 0) {
+        NSIndexPath *prevPath = [NSIndexPath indexPathForItem:selectedPath inSection:0];
+        selectedPath = indexPath.row;
+        [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:prevPath] withRowAnimation:UITableViewRowAnimationFade];
+
+        return;
+    }
+
+    selectedPath = indexPath.row;
+    [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)returnToCam:(id)sender
