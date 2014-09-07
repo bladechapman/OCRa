@@ -47,7 +47,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-
+    /*
     AVCaptureSession *session = [[AVCaptureSession alloc] init];
 	session.sessionPreset = AVCaptureSessionPresetHigh;
 
@@ -77,7 +77,9 @@
     [session addOutput:_stillImageOutput];
 
 	[session startRunning];
-     
+    */
+
+    [self saveImageToServer:[UIImage imageNamed:@"text4.JPG"]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -126,7 +128,7 @@
 }
 - (IBAction)useButtonTapped:(id)sender {
     [[self delegate] imageCaptured:self.vImage.image];
-    [self saveImageToServer:self.vImage.image];
+//    [self saveImageToServer:self.vImage.image];
     [self previewMode:NO];
 }
 
@@ -136,13 +138,14 @@
     NSData *dataImage = UIImageJPEGRepresentation(imageToSave, 1.0f);
 
     // set your URL Where to Upload Image
-    NSString *urlString = @"35.2.125.209/api/analyze_picture";
+    NSString *urlString = @"http://35.2.125.209:8080/api/analyze_picture";
 
     // set your Image Name
-    NSString *filename = @"YourImageFileName";
+    NSString *filename = @"text";
 
     // Create 'POST' MutableRequest with Data and Other Image Attachment.
     NSMutableURLRequest* request= [[NSMutableURLRequest alloc] init];
+    [request setTimeoutInterval:180];
     [request setURL:[NSURL URLWithString:urlString]];
     [request setHTTPMethod:@"POST"];
     NSString *boundary = @"---------------------------14737809831466499882746641449";

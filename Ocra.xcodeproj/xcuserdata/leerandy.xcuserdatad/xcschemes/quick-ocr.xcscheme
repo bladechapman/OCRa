@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "09C76C2619BB03A70032C5A9"
-               BuildableName = "quick-ocr.app"
+               BuildableName = "Ocra.app"
                BlueprintName = "Ocra"
                ReferencedContainer = "container:Ocra.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "09C76C4719BB03A80032C5A9"
-               BuildableName = "quick-ocrTests.xctest"
+               BuildableName = "OcraTests.xctest"
                BlueprintName = "OcraTests"
                ReferencedContainer = "container:Ocra.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "09C76C2619BB03A70032C5A9"
-            BuildableName = "quick-ocr.app"
+            BuildableName = "Ocra.app"
             BlueprintName = "Ocra"
             ReferencedContainer = "container:Ocra.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "09C76C2619BB03A70032C5A9"
-            BuildableName = "quick-ocr.app"
+            BuildableName = "Ocra.app"
             BlueprintName = "Ocra"
             ReferencedContainer = "container:Ocra.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "09C76C2619BB03A70032C5A9"
-            BuildableName = "quick-ocr.app"
+            BuildableName = "Ocra.app"
             BlueprintName = "Ocra"
             ReferencedContainer = "container:Ocra.xcodeproj">
          </BuildableReference>
