@@ -14,5 +14,6 @@
 @property IBOutlet UILabel *centerTitle;
 @property IBOutlet UIImageView *primaryImage;
 @property BOOL loadingStatus;
+@property NSString *link;
 
 @end

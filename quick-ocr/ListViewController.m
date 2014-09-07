@@ -94,7 +94,8 @@
     cell.centerTitle.text = [(ListItem *)[[[ListItemStore sharedStore] allItems] objectAtIndex:[indexPath row]] text];
     cell.primaryImage.image = [(ListItem *)[[[ListItemStore sharedStore] allItems] objectAtIndex:[indexPath row]] image];
     cell.loadingStatus = [(ListItem *)[[[ListItemStore sharedStore] allItems] objectAtIndex:[indexPath row]] isLoaded];
-    
+    cell.link = [(ListItem *)[[[ListItemStore sharedStore] allItems] objectAtIndex:[indexPath row]] link];
+
     return cell;
 }
 
@@ -119,7 +120,7 @@
     //in relation to the label height otherwise we just return the minimum label height with padding
     if(selectedPath == indexPath.row)
     {
-        return 130.f;
+        return 50.f;
     }
     else {
         return 50.f;
@@ -147,11 +148,16 @@
 
     selectedPath = indexPath.row;
     [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+    ListItem *item = [[[ListItemStore sharedStore] allItems] objectAtIndex:[indexPath row]];
+    NSString *text = [item link];
+    if (![text isEqualToString:@""]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:text]];
+    }
 }
 
 - (void)returnToCam:(id)sender
 {
-    NSLog(@"fdsafasd");
     [[self delegate] goToCam];
 }
 

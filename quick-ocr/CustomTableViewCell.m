@@ -12,6 +12,7 @@
 
 @synthesize centerTitle;
 @synthesize primaryImage;
+@synthesize link;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

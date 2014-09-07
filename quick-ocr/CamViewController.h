@@ -18,5 +18,6 @@
 @protocol CamViewControllerDelegate <NSObject>
 
 - (void)imageCaptured:(UIImage *)image;
+- (void)dataReceivedWithTitle: (NSString *)title andLink:(NSString *)link;
 
 @end

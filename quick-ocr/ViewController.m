@@ -82,12 +82,26 @@
 #pragma mark - Cam Delegate
 - (void)imageCaptured:(UIImage *)image {
 //    NSLog(@"image picked");
-    ListItem *listItem = [[ListItem alloc] initWithImage:image andLoaded:NO andText:nil];
+    ListItem *listItem = [[ListItem alloc] initWithImage:image andLoaded:NO andText:nil andLink:nil];
     [[ListItemStore sharedStore] addItem:listItem];
     [_listViewController reload];
 
     [_scrollView setContentOffset: CGPointMake(_scrollView.contentOffset.x + self.view.frame.size.width,
                                                _scrollView.contentOffset.y) animated:YES];
+}
+- (void)dataReceivedWithTitle:(NSString *)title andLink:(NSString *)link
+{
+    NSLog(@"received title %@, and link %@", title, link);
+
+    for (ListItem *item in [[ListItemStore sharedStore] allItems]) {
+        if (!item.isLoaded) {
+            item.isLoaded = YES;
+            item.text = title;
+            item.link = link;
+        }
+    }
+
+    [_listViewController reload];
 }
 
 #pragma mark - List Delegate

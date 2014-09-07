@@ -9,6 +9,7 @@
 #import "CamViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import <ImageIO/CGImageProperties.h>
+#import "SVProgressHUD.h"
 
 @interface CamViewController ()
 
@@ -47,7 +48,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    /*
+
     AVCaptureSession *session = [[AVCaptureSession alloc] init];
 	session.sessionPreset = AVCaptureSessionPresetHigh;
 
@@ -77,9 +78,9 @@
     [session addOutput:_stillImageOutput];
 
 	[session startRunning];
-    */
 
-    [self saveImageToServer:[UIImage imageNamed:@"text4.JPG"]];
+
+//    [self saveImageToServer:[UIImage imageNamed:@"text4.JPG"]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -127,25 +128,32 @@
     [self previewMode:NO];
 }
 - (IBAction)useButtonTapped:(id)sender {
+
     [[self delegate] imageCaptured:self.vImage.image];
-//    [self saveImageToServer:self.vImage.image];
+
+    //long process
+    [self saveImageToServer:self.vImage.image];
+
+
     [self previewMode:NO];
 }
 
 -(void)saveImageToServer:(UIImage *)imageToSave
 {
+
     // COnvert Image to NSData
     NSData *dataImage = UIImageJPEGRepresentation(imageToSave, 1.0f);
 
     // set your URL Where to Upload Image
-    NSString *urlString = @"http://35.2.125.209:8080/api/analyze_picture";
+//    NSString *urlString = @"http://35.2.99.213:8080/api/analyze_picture";
+    NSString *urlString = @"http://mhacksocrtolink.cloudapp.net:8080/api/analyze_picture";
 
     // set your Image Name
     NSString *filename = @"text";
 
     // Create 'POST' MutableRequest with Data and Other Image Attachment.
     NSMutableURLRequest* request= [[NSMutableURLRequest alloc] init];
-    [request setTimeoutInterval:180];
+    [request setTimeoutInterval:45];
     [request setURL:[NSURL URLWithString:urlString]];
     [request setHTTPMethod:@"POST"];
     NSString *boundary = @"---------------------------14737809831466499882746641449";
@@ -160,9 +168,46 @@
     [request setHTTPBody:postbody];
 
     // Get Response of Your Request
+
     NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     NSString *responseString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-    NSLog(@"Response  %@",responseString);
+    NSLog(@"string: %@", responseString);
+
+
+    [self performSelectorOnMainThread:@selector(dataReceived:) withObject:returnData waitUntilDone:YES];
+}
+
+- (void)dataReceived:(NSData *)response {
+
+    @try {
+
+        //    NSLog(@"response: %@", response);
+
+        NSError* error;
+        NSArray* json = [NSJSONSerialization
+                         JSONObjectWithData:response
+
+                         options:kNilOptions
+                         error:&error];
+
+        NSDictionary *val = nil;
+        if ([json count] != 0)
+            val = [json objectAtIndex:0];
+
+        NSLog(@"val %@", val);
+
+        NSString *title = [val objectForKey:@"title"];
+        NSString *url = [val objectForKey: @"url"];
+        NSLog(@"title %@", title);
+        NSLog(@"url %@", url);
+        
+        [[self delegate] dataReceivedWithTitle: title andLink: url];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"oops! exception was thrown");
+    }
+    @finally {
+    }
 }
 
 - (void)previewMode:(BOOL)isPreview {
