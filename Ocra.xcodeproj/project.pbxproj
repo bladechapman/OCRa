@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0918E04E19BCA0CA0040914F /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0918E04D19BCA0CA0040914F /* SVProgressHUD.m */; };
 		097CB80719BC5F9D00A0427B /* text8.png in Resources */ = {isa = PBXBuildFile; fileRef = 097CB80519BC5F9D00A0427B /* text8.png */; };
 		097CB80819BC5F9D00A0427B /* text9.png in Resources */ = {isa = PBXBuildFile; fileRef = 097CB80619BC5F9D00A0427B /* text9.png */; };
 		09C76C2B19BB03A70032C5A9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C76C2A19BB03A70032C5A9 /* Foundation.framework */; };
@@ -68,6 +69,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0918E04C19BCA0CA0040914F /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		0918E04D19BCA0CA0040914F /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		097CB80519BC5F9D00A0427B /* text8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text8.png; sourceTree = "<group>"; };
 		097CB80619BC5F9D00A0427B /* text9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text9.png; sourceTree = "<group>"; };
 		09C76C2719BB03A70032C5A9 /* Ocra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ocra.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -210,11 +213,13 @@
 			children = (
 				09C76C3919BB03A70032C5A9 /* AppDelegate.h */,
 				09C76C3A19BB03A70032C5A9 /* AppDelegate.m */,
+				0918E04C19BCA0CA0040914F /* SVProgressHUD.h */,
+				0918E04D19BCA0CA0040914F /* SVProgressHUD.m */,
 				09C76C3C19BB03A70032C5A9 /* Main.storyboard */,
 				09C76C8C19BB810C0032C5A9 /* CustomScrollView.h */,
 				09C76C8D19BB810C0032C5A9 /* CustomScrollView.m */,
-				09C76CCA19BC34B40032C5A9 /* ViewController.m */,
 				09C76CCB19BC34B40032C5A9 /* ViewController.h */,
+				09C76CCA19BC34B40032C5A9 /* ViewController.m */,
 				09C76C9F19BBAE040032C5A9 /* Cam */,
 				09C76C9E19BBADF60032C5A9 /* List */,
 				09C76C8F19BB93640032C5A9 /* photo.png */,
@@ -414,6 +419,7 @@
 				09C76C3B19BB03A70032C5A9 /* AppDelegate.m in Sources */,
 				09C76CB119BBE2B10032C5A9 /* CustomTableViewCell.m in Sources */,
 				09C76C8019BB21510032C5A9 /* ListItem.m in Sources */,
+				0918E04E19BCA0CA0040914F /* SVProgressHUD.m in Sources */,
 				09C76C7819BB10A30032C5A9 /* CamViewController.m in Sources */,
 				09C76C3719BB03A70032C5A9 /* main.m in Sources */,
 			);

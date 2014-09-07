@@ -13,7 +13,8 @@
 @property UIImage *image;
 @property BOOL isLoaded;
 @property NSString *text;
+@property NSString *link;
 
-- (id)initWithImage:(UIImage *)image andLoaded:(BOOL)loaded andText:(NSString *)text;
+- (id)initWithImage:(UIImage *)image andLoaded:(BOOL)loaded andText:(NSString *)text andLink:(NSString *)link;
 
 @end

@@ -11,13 +11,14 @@
 @implementation ListItem
 
 - (id)init {
-    return [self initWithImage:nil andLoaded:NO andText:nil];
+    return [self initWithImage:nil andLoaded:NO andText:nil andLink:nil];
 }
-- (id)initWithImage:(UIImage *)image andLoaded:(BOOL)loaded andText:(NSString *)text {
+- (id)initWithImage:(UIImage *)image andLoaded:(BOOL)loaded andText:(NSString *)text andLink:(NSString *)link {
     if (self = [super init]) {
         (image == nil) ? (_image = [[UIImage alloc] init]) : (_image = image);
         _isLoaded = loaded;
         (text == nil) ? (_text = @"Loading...") : (_text = text);
+        (link == nil) ? (_link = @"") : (_link = link);
     }
 
     return self;
