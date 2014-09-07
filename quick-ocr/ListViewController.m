@@ -67,6 +67,31 @@
     [[self tableView] reloadData];
 }
 
+- (void)updateItemAtIndex:(NSInteger)index andTitle:(NSString *)title andLinks:(NSArray *)linksArray
+{
+    ListItem *item = [[[ListItemStore sharedStore] allItems] objectAtIndex:index];
+    item.text = title;
+    item.isLoaded = YES;
+    [[(CustomTableViewCell *)[[self tableView] cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]] indicator] setHidden:YES];
+
+    NSIndexPath *path = [NSIndexPath indexPathForRow:index inSection:0];
+
+    [[self tableView] reloadRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationFade];
+}
+- (void)updateUnloadedItemWithTitle:(NSString *)title {
+    NSLog(@"made it to updateUnloadedItemWithTitle");
+
+    for (ListItem *item in [[ListItemStore sharedStore] allItems]) {
+        NSLog(@"item: %@", item);
+        if (!item.isLoaded) {
+            item.text = title;
+            item.isLoaded = YES;
+        }
+    }
+
+    [self reload];
+}
+
 - (void)reload
 {
     NSLog(@"reload called");
@@ -151,7 +176,6 @@
 
 - (void)returnToCam:(id)sender
 {
-    NSLog(@"fdsafasd");
     [[self delegate] goToCam];
 }
 

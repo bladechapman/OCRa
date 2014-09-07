@@ -16,6 +16,8 @@
 @property id<ListViewControllerDelegate>delegate;
 
 - (void)reload;
+- (void)updateItemAtIndex:(NSInteger)index andTitle:(NSString *)title andLinks:(NSArray *)linksArray;
+- (void)updateUnloadedItemWithTitle:(NSString *)title;
 
 @end
 

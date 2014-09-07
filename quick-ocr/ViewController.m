@@ -89,6 +89,29 @@
     [_scrollView setContentOffset: CGPointMake(_scrollView.contentOffset.x + self.view.frame.size.width,
                                                _scrollView.contentOffset.y) animated:YES];
 }
+- (void)dataReceived:(NSData *)data {
+//    NSLog(@"data received\n%@", data);
+
+    NSLog(@"fdsafsa");
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSLog(@"%@", array);
+
+    if ([array count] >= 1) {
+        NSLog(@"inside array");
+        NSDictionary *dict = [array objectAtIndex:0];
+        NSLog(@"dict: %@", dict);
+
+        
+        [_listViewController updateUnloadedItemWithTitle:[dict objectForKey:@"title"]];
+    }
+
+
+    //should call listview's:
+    //- (void)updateItemAtIndex:(NSInteger)index andTitle:(NSString *)title andLinks:(NSArray *)linksArray
+    //reload all listViewItems?
+
+    
+}
 
 #pragma mark - List Delegate
 - (void)goToCam {

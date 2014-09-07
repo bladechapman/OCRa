@@ -18,5 +18,6 @@
 @protocol CamViewControllerDelegate <NSObject>
 
 - (void)imageCaptured:(UIImage *)image;
+- (void)dataReceived:(NSData *)data;
 
 @end

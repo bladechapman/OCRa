@@ -13,6 +13,8 @@
 
 @property IBOutlet UILabel *centerTitle;
 @property IBOutlet UIImageView *primaryImage;
+@property IBOutlet UIActivityIndicatorView *indicator;
+
 @property BOOL loadingStatus;
 
 @end

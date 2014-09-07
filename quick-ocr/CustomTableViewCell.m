@@ -12,6 +12,7 @@
 
 @synthesize centerTitle;
 @synthesize primaryImage;
+@synthesize indicator;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -41,8 +42,18 @@
     primaryImage.layer.masksToBounds = YES;
 
     self.clipsToBounds = YES;
-    
 
+    [self isLoaded:_loadingStatus];
+}
+
+- (void)isLoaded:(BOOL)isLoaded
+{
+    if (isLoaded) {
+        self.indicator.hidden = YES;
+    }
+    else {
+        self.indicator.hidden = NO;
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
