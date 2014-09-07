@@ -17,7 +17,7 @@
     if (self = [super init]) {
         (image == nil) ? (_image = [[UIImage alloc] init]) : (_image = image);
         _isLoaded = loaded;
-        (text == nil) ? (_text = @"text is nil") : (_text = text);
+        (text == nil) ? (_text = @"Loading...") : (_text = text);
     }
 
     return self;

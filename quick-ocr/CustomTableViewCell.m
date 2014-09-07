@@ -10,32 +10,39 @@
 
 @implementation CustomTableViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+@synthesize centerTitle;
+@synthesize primaryImage;
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-
     if (self) {
-        // Helpers
-        CGSize size = self.contentView.frame.size;
+        // Initialization code
+        [self initialize];
 
-        // Initialize Main Label
-        self.mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(8.0, 8.0, size.width - 16.0, size.height - 16.0)];
-
-        // Configure Main Label
-        [self.mainLabel setFont:[UIFont boldSystemFontOfSize:24.0]];
-        [self.mainLabel setTextAlignment:NSTextAlignmentCenter];
-        [self.mainLabel setTextColor:[UIColor orangeColor]];
-        [self.mainLabel setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
-
-        // Add Main Label to Content View
-        [self.contentView addSubview:self.mainLabel];
     }
-    
     return self;
 }
 
 - (void)awakeFromNib
 {
     // Initialization code
+    [self initialize];
+}
+
+- (void)initialize {
+//    if (primaryImage.frame.size.width != primaryImage.frame.size.height) {
+//        primaryImage.frame = CGRectMake(0, 0, primaryImage.frame.size.width, primaryImage.frame.size.width);
+//    }
+
+    primaryImage.frame = CGRectMake(0, 0, 40, 40);
+
+    primaryImage.layer.cornerRadius = primaryImage.frame.size.width/4.f;
+    primaryImage.layer.masksToBounds = YES;
+
+    self.clipsToBounds = YES;
+    
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

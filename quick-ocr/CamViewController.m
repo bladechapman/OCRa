@@ -47,6 +47,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+
     AVCaptureSession *session = [[AVCaptureSession alloc] init];
 	session.sessionPreset = AVCaptureSessionPresetHigh;
 
@@ -76,6 +77,7 @@
     [session addOutput:_stillImageOutput];
 
 	[session startRunning];
+     
 }
 
 - (void)didReceiveMemoryWarning
@@ -124,7 +126,40 @@
 }
 - (IBAction)useButtonTapped:(id)sender {
     [[self delegate] imageCaptured:self.vImage.image];
+    [self saveImageToServer:self.vImage.image];
     [self previewMode:NO];
+}
+
+-(void)saveImageToServer:(UIImage *)imageToSave
+{
+    // COnvert Image to NSData
+    NSData *dataImage = UIImageJPEGRepresentation(imageToSave, 1.0f);
+
+    // set your URL Where to Upload Image
+    NSString *urlString = @"35.2.125.209/api/analyze_picture";
+
+    // set your Image Name
+    NSString *filename = @"YourImageFileName";
+
+    // Create 'POST' MutableRequest with Data and Other Image Attachment.
+    NSMutableURLRequest* request= [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:urlString]];
+    [request setHTTPMethod:@"POST"];
+    NSString *boundary = @"---------------------------14737809831466499882746641449";
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
+    [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
+    NSMutableData *postbody = [NSMutableData data];
+    [postbody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postbody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"userfile\"; filename=\"%@.jpg\"\r\n", filename] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postbody appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [postbody appendData:[NSData dataWithData:dataImage]];
+    [postbody appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setHTTPBody:postbody];
+
+    // Get Response of Your Request
+    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    NSString *responseString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+    NSLog(@"Response  %@",responseString);
 }
 
 - (void)previewMode:(BOOL)isPreview {
