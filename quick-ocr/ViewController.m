@@ -89,6 +89,19 @@
     [_scrollView setContentOffset: CGPointMake(_scrollView.contentOffset.x + self.view.frame.size.width,
                                                _scrollView.contentOffset.y) animated:YES];
 }
+- (void)dataReceivedWithTitle:(NSString *)title andLink:(NSString *)link
+{
+    NSLog(@"received title %@, and link %@", title, link);
+
+    for (ListItem *item in [[ListItemStore sharedStore] allItems]) {
+        if (!item.isLoaded) {
+            item.isLoaded = YES;
+            item.text = title;
+        }
+    }
+
+    [_listViewController reload];
+}
 
 #pragma mark - List Delegate
 - (void)goToCam {

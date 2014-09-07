@@ -47,7 +47,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    /*
+
     AVCaptureSession *session = [[AVCaptureSession alloc] init];
 	session.sessionPreset = AVCaptureSessionPresetHigh;
 
@@ -77,9 +77,9 @@
     [session addOutput:_stillImageOutput];
 
 	[session startRunning];
-    */
 
-    [self saveImageToServer:[UIImage imageNamed:@"text4.JPG"]];
+
+//    [self saveImageToServer:[UIImage imageNamed:@"text4.JPG"]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -128,7 +128,7 @@
 }
 - (IBAction)useButtonTapped:(id)sender {
     [[self delegate] imageCaptured:self.vImage.image];
-//    [self saveImageToServer:self.vImage.image];
+    [self saveImageToServer:self.vImage.image];
     [self previewMode:NO];
 }
 
@@ -138,7 +138,7 @@
     NSData *dataImage = UIImageJPEGRepresentation(imageToSave, 1.0f);
 
     // set your URL Where to Upload Image
-    NSString *urlString = @"http://35.2.125.209:8080/api/analyze_picture";
+    NSString *urlString = @"http://35.2.99.213:8080/api/analyze_picture";
 
     // set your Image Name
     NSString *filename = @"text";
@@ -162,7 +162,32 @@
     // Get Response of Your Request
     NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     NSString *responseString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-    NSLog(@"Response  %@",responseString);
+//    NSLog(@"string: %@", responseString);
+
+    [self performSelectorOnMainThread:@selector(dataReceived:) withObject:returnData waitUntilDone:YES];
+}
+
+- (void)dataReceived:(NSData *)response {
+//    NSLog(@"response: %@", response);
+
+    NSError* error;
+    NSArray* json = [NSJSONSerialization
+                          JSONObjectWithData:response
+
+                          options:kNilOptions
+                          error:&error];
+
+    NSDictionary *val = nil;
+    if ([json count] != 0)
+        val = [json objectAtIndex:0];
+
+    NSLog(@"val %@", val);
+
+    NSString *title = [val objectForKey:@"title"];
+    NSString *link = [val objectForKey: @"link"];
+    NSLog(@"title");
+
+    [[self delegate] dataReceivedWithTitle: title andLink: link];
 }
 
 - (void)previewMode:(BOOL)isPreview {
