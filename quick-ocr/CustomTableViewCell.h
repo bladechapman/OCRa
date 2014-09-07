@@ -1,5 +1,5 @@
 //
-//  ContentTableViewCell.h
+//  CustomTableViewCell.h
 //  quick-ocr
 //
 //  Created by Blade on 9/6/14.
@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ContentTableViewCell : UITableViewCell
+@interface CustomTableViewCell : UITableViewCell
+
+@property (strong, nonatomic) UILabel *mainLabel;
 
 @end
