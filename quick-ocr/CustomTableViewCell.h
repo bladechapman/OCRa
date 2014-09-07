@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface CustomTableViewCell : UITableViewCell
 
-@property (strong, nonatomic) UILabel *mainLabel;
+@property IBOutlet UILabel *centerTitle;
+@property IBOutlet UIImageView *primaryImage;
+@property BOOL loadingStatus;
 
 @end

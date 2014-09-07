@@ -63,13 +63,6 @@
     [[self view] addSubview:_scrollView];
     
     [[self view] setBackgroundColor:[UIColor blackColor]];
-
-
-//    _listViewController = [[ListViewController alloc] init];
-//    [[ListItemStore sharedStore] addItem:[[ListItem alloc] initWithImage:[UIImage imageNamed:@"test.png"] andLoaded:NO andText:@"fdafasd"]];
-//    [[self view] addSubview:[_listViewController view]];
-//    [_listViewController reload];
-
 }
 
 - (void)didReceiveMemoryWarning

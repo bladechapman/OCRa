@@ -9,6 +9,7 @@
 #import "ListViewController.h"
 #import "ListItemStore.h"
 #import "ListItem.h"
+#import "CustomTableViewCell.h"
 
 @interface ListViewController () {
     NSInteger selectedPath;
@@ -41,7 +42,6 @@
 
         selectedPath = -1;
 
-//        self.tableView.tableHeaderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ITc3qFX"]];
 
         [[self navigationItem] setLeftBarButtonItem:[[UIBarButtonItem alloc]
                                                      initWithImage:[UIImage imageNamed:@"camera-icon"] landscapeImagePhone:[UIImage imageNamed:@"camera-icon"] style:UIBarButtonItemStylePlain target:self action:@selector(returnToCam:)]];
@@ -82,42 +82,21 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //check for a reusable cell first, use that if it exists
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
+    NSString *ident = @"myCell";
 
-    //If there is no reusable cell of this type, create a new one
-    if(!cell)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCell"];
+    CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ident];
+    if (!cell) {
+//        cell = [[CustomTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ident];
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil];
+        cell = [topLevelObjects objectAtIndex:0];
     }
 
-    ListItem *item = [[[ListItemStore sharedStore] allItems] objectAtIndex:[indexPath row]];
-    [[cell textLabel] setText:[item text]];
-
-    [[cell imageView] setImage:[self imageByCroppingImage:[item image] toSize:CGSizeMake(30, 30)]];
-    [cell imageView].layer.cornerRadius = 15;
-    [cell imageView].layer.masksToBounds = YES;
-    NSLog(@"%@", [item text]);
-
-    // Configure the cell...
+    cell.centerTitle.text = [(ListItem *)[[[ListItemStore sharedStore] allItems] objectAtIndex:[indexPath row]] text];
+    cell.primaryImage.image = [(ListItem *)[[[ListItemStore sharedStore] allItems] objectAtIndex:[indexPath row]] image];
+    cell.loadingStatus = [(ListItem *)[[[ListItemStore sharedStore] allItems] objectAtIndex:[indexPath row]] isLoaded];
     
     return cell;
 }
-
-- (UIImage *)imageByCroppingImage:(UIImage *)image toSize:(CGSize)size
-{
-    double x = (image.size.width - size.width) / 2.0;
-    double y = (image.size.height - size.height) / 2.0;
-
-    CGRect cropRect = CGRectMake(x, y, size.height, size.width);
-    CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], cropRect);
-
-    UIImage *cropped = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
-
-    return cropped;
-}
-
 
 
 // Override to support editing the table view.
@@ -140,7 +119,7 @@
     //in relation to the label height otherwise we just return the minimum label height with padding
     if(selectedPath == indexPath.row)
     {
-        return 100.f;
+        return 130.f;
     }
     else {
         return 50.f;
